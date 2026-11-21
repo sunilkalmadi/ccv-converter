@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SYNTHETIC test data only. All people, titles and organizations are invented. -->
+<generic-cv:generic-cv xmlns:generic-cv="http://www.cihr-irsc.gc.ca/generic-cv/1.0.0" lang="en" dateTimeGenerated="2026-01-01 00:00:00">
+  <section id="p1" label="Personal Information">
+    <section id="p2" label="Identification">
+      <field id="f1" label="Title"><lov id="l1">Dr.</lov></field>
+      <field id="f2" label="First Name"><value type="String">Ada</value></field>
+      <field id="f3" label="Family Name"><value type="String">Exämple-Testér</value></field>
+      <field id="f4" label="Correspondence language"><lov id="l2">English</lov></field>
+      <field id="f5" label="Previous Family Name"/>
+      <section id="p3" label="Country of Citizenship">
+        <field id="f6" label="Country of Citizenship"><lov id="l3">Canada</lov></field>
+      </section>
+    </section>
+    <section id="p4" label="Address">
+      <field id="f7" label="Address Type"><lov id="l4">Primary Affiliation</lov></field>
+      <field id="f8" label="Address - Line 1"><value type="String">123 Fictional Hall</value></field>
+      <field id="f9" label="Line 2"/>
+      <field id="f10" label="City"><value type="String">Sampleton</value></field>
+      <field id="f11" label="Location"><refTable refValueId="r1" label="Location"><linkedWith label="Country" value="Canada" refOrLovId="x"/><linkedWith label="Subdivision" value="Alberta" refOrLovId="y"/></refTable></field>
+      <field id="f12" label="Postal / Zip Code"><value type="String">T0T 0T0</value></field>
+    </section>
+    <section id="p5" label="Telephone">
+      <field id="f13" label="Phone Type"><lov id="l5">Work</lov></field>
+      <field id="f14" label="Country Code"><value type="Number">1</value></field>
+      <field id="f15" label="Area Code"><value type="Number">555</value></field>
+      <field id="f16" label="Telephone Number"><value type="String">0100</value></field>
+    </section>
+    <section id="p6" label="Email">
+      <field id="f17" label="Email Type"><lov id="l6">Work</lov></field>
+      <field id="f18" label="Email Address"><value type="String">ada@example.org</value></field>
+    </section>
+  </section>
+  <section id="e1" label="Education">
+    <section id="e2" label="Degrees">
+      <field id="g1" label="Degree Type"><lov id="l7">Doctorate</lov></field>
+      <field id="g2" label="Degree Name"><value type="String">PhD</value></field>
+      <field id="g3" label="Specialization"/>
+      <field id="g4" label="Organization"><refTable refValueId="r2" label="Organization"><linkedWith label="Organization" value="Imaginary University" refOrLovId="z"/></refTable></field>
+      <field id="g5" label="Degree Status"><lov id="l8">Completed</lov></field>
+      <field id="g6" label="Degree Start Date"><value type="YearMonth">1990/9</value></field>
+      <field id="g7" label="Degree Received Date"><value type="YearMonth">1995/6</value></field>
+      <section id="e3" label="Supervisors">
+        <field id="g8" label="Supervisor Name"><value type="String">Prof. Fictive Mentor</value></field>
+        <field id="g9" label="Start Date"><value type="YearMonth">1990/9</value></field>
+        <field id="g10" label="End Date"><value type="YearMonth">1995/6</value></field>
+      </section>
+    </section>
+  </section>
+  <section id="r0" label="Recognitions">
+    <field id="h1" label="Recognition Type"><lov id="l9">Prize / Award</lov></field>
+    <field id="h2" label="Recognition Name"><value type="String">Best Synthetic Paper &amp; Prize</value></field>
+    <field id="h3" label="Effective Date"><value type="YearMonth">2020/5</value></field>
+    <field id="h4" label="End Date"/>
+    <field id="h5" label="Organization"/>
+    <field id="h6" label="Other Organization"><value type="String">Society of Made-Up Things</value></field>
+    <field id="h7" label="Description"/>
+  </section>
+  <section id="m1" label="Employment">
+    <section id="m2" label="Academic Work Experience">
+      <field id="i1" label="Position Title"><value type="String">Professor</value></field>
+      <field id="i2" label="Department"><value type="String">Computing Science</value></field>
+      <field id="i3" label="Organization"><refTable refValueId="r3" label="Organization"><linkedWith label="Organization" value="Imaginary University" refOrLovId="z"/></refTable></field>
+      <field id="i4" label="Start Date"><value type="YearMonth">2005/7</value></field>
+      <field id="i5" label="End Date"/>
+      <field id="i6" label="Academic Rank"><lov id="l10">Full Professor</lov></field>
+    </section>
+    <section id="m3" label="Academic Work Experience">
+      <field id="i7" label="Position Title"><value type="String">Assistant Professor</value></field>
+      <field id="i8" label="Organization"><refTable refValueId="r4" label="Organization"><linkedWith label="Organization" value="Imaginary University" refOrLovId="z"/></refTable></field>
+      <field id="i9" label="Start Date"><value type="YearMonth">1998/7</value></field>
+      <field id="i10" label="End Date"><value type="YearMonth">2005/6</value></field>
+    </section>
+    <section id="m4" label="Non-academic Work Experience">
+      <field id="i11" label="Position Title"><value type="String">Consultant</value></field>
+      <field id="i12" label="Other Organization"><value type="String">Hidden Consulting Ltd.</value></field>
+      <field id="i13" label="Start Date"><value type="YearMonth">2001/1</value></field>
+      <field id="i14" label="End Date"><value type="YearMonth">2002/1</value></field>
+    </section>
+  </section>
+  <section id="rf1" label="Research Funding History">
+    <field id="j1" label="Funding Title"><value type="String">Synthetic Data for Everyone</value></field>
+    <field id="j2" label="Funding Start Date"><value type="YearMonth">2019/4</value></field>
+    <field id="j3" label="Funding End Date"><value type="YearMonth">2024/3</value></field>
+    <field id="j4" label="Funding Role"><lov id="l11">Principal Investigator</lov></field>
+    <field id="j4s" label="Funding Status"><lov id="l11s">Completed</lov></field>
+    <section id="rf2" label="Funding Sources">
+      <field id="j5" label="Funding Organization"><value type="String">Fake Research Council</value></field>
+      <field id="j6" label="Program Name"><value type="String">Discovery</value></field>
+      <field id="j7" label="Total Funding"><value type="Number">125000</value></field>
+      <field id="j7c" label="Currency of Total Funding"><lov id="cur">Canadian dollar</lov></field>
+      <field id="j8" label="Funding Start Date"/>
+      <field id="j9" label="Funding End Date"/>
+    </section>
+  </section>
+  <section id="rf3" label="Research Funding History">
+    <field id="j10" label="Funding Title"><value type="String">Shared Team Grant on Pretend Models</value></field>
+    <field id="j11" label="Funding Start Date"><value type="YearMonth">2024/1</value></field>
+    <field id="j12" label="Funding End Date"><value type="YearMonth">2028/12</value></field>
+    <field id="j13" label="Funding Role"><lov id="l11b">Co-applicant</lov></field>
+    <field id="j14" label="Funding Status"><lov id="l11c">Awarded</lov></field>
+  </section>
+  <section id="ct1" label="Courses Taught">
+    <field id="k1" label="Course Title"><value type="String">Intro to Testing</value></field>
+    <field id="k1c" label="Course Code"><value type="String">TEST 101</value></field>
+    <field id="k1l" label="Course Level"><lov id="lv">Undergraduate</lov></field>
+    <field id="k2" label="Start Date"><value type="Date">2010-09-01</value></field>
+    <field id="k3" label="End Date"><value type="Date">2012-04-30</value></field>
+  </section>
+  <section id="ct2" label="Courses Taught">
+    <field id="k4" label="Course Title"><value type="String">Intro to Testing</value></field>
+    <field id="k5" label="Start Date"><value type="Date">2015-09-01</value></field>
+    <field id="k6" label="End Date"><value type="Date">2015-12-20</value></field>
+  </section>
+
+  <!-- Supervision: 2 Bachelor's, 2 Master's Thesis, 1 Doctorate, 1 Post-doctorate,
+       1 Intern, 1 Research Associate, 1 with no degree type = 9 records. -->
+  <section id="s1" label="Student/Postdoctoral Supervision">
+    <field id="n1" label="Supervision Start Date"><value type="YearMonth">2001/9</value></field>
+    <field id="n2" label="Supervision End Date"><value type="YearMonth">2006/8</value></field>
+    <field id="n3" label="Student Name"><value type="String">Doc Student One</value></field>
+    <field id="n4" label="Degree Type or Postdoctoral Status"><lov id="d3">Doctorate</lov></field>
+    <field id="n5" label="Thesis/Project Title"><value type="String">On &lt;Fast&gt; Learning &amp; Inference: a “Synthetic” Study</value></field>
+    <field id="n6" label="Present Position"><value type="String">Research Scientist, Example Labs</value></field>
+    <field id="n7" label="Present Organization"><value type="String">Example Labs</value></field>
+    <field id="n7r" label="Supervision Role"><lov id="sr1">Principal Supervisor</lov></field>
+    <field id="n7s" label="Student Degree Status"><lov id="ss1">Completed</lov></field>
+  </section>
+  <section id="s2" label="Student/Postdoctoral Supervision">
+    <field id="n8" label="Supervision Start Date"><value type="YearMonth">2010/5</value></field>
+    <field id="n9" label="Supervision End Date"><value type="YearMonth">2010/8</value></field>
+    <field id="n10" label="Student Name"><value type="String">Bach Student One</value></field>
+    <field id="n11" label="Degree Type or Postdoctoral Status"><lov id="d1">Bachelor’s</lov></field>
+    <field id="n12" label="Thesis/Project Title"><value type="String">Summer Project on Eﬃcient​ Widgets</value></field>
+    <field id="n13" label="Present Position"><value type="String">Software Developer</value></field>
+    <field id="n14" label="Present Organization"><value type="String">Widget Co.</value></field>
+  </section>
+  <section id="s3" label="Student/Postdoctoral Supervision">
+    <field id="n15" label="Supervision Start Date"><value type="YearMonth">2011/5</value></field>
+    <field id="n16" label="Student Name"><value type="String">Bach Student Two</value></field>
+    <field id="n17" label="Degree Type or Postdoctoral Status"><lov id="d1">Bachelor’s</lov></field>
+    <field id="n18" label="Thesis/Project Title"/>
+    <field id="n19" label="Present Position"><value type="String"></value></field>
+    <field id="n20" label="Present Organization"/>
+  </section>
+  <section id="s4" label="Student/Postdoctoral Supervision">
+    <field id="n21" label="Supervision Start Date"><value type="YearMonth">2012/9</value></field>
+    <field id="n22" label="Supervision End Date"><value type="YearMonth">2014/8</value></field>
+    <field id="n23" label="Student Name"><value type="String">Master Student One</value></field>
+    <field id="n24" label="Degree Type or Postdoctoral Status"><lov id="d2">Master's Thesis</lov></field>
+    <field id="n25" label="Thesis/Project Title"><value type="String">A Very Long Thesis Title That Goes On And On About Robust Evaluation Of
+      Hypothetical Models Under Many Synthetic Conditions</value></field>
+  </section>
+  <section id="s5" label="Student/Postdoctoral Supervision">
+    <field id="n26" label="Supervision Start Date"><value type="YearMonth">2015/9</value></field>
+    <field id="n27" label="Supervision End Date"><value type="YearMonth">2017/8</value></field>
+    <field id="n28" label="Student Name"><value type="String">Master Student Two</value></field>
+    <field id="n29" label="Degree Type or Postdoctoral Status"><lov id="d2">Master's Thesis</lov></field>
+    <field id="n30" label="Present Position"><value type="String">Data Analyst</value></field>
+  </section>
+  <section id="s6" label="Student/Postdoctoral Supervision">
+    <field id="n31" label="Supervision Start Date"><value type="YearMonth">2018/1</value></field>
+    <field id="n32" label="Supervision End Date"><value type="YearMonth">2020/1</value></field>
+    <field id="n33" label="Student Name"><value type="String">Postdoc Fellow One</value></field>
+    <field id="n34" label="Degree Type or Postdoctoral Status"><lov id="d4">Post-doctorate</lov></field>
+    <field id="n35" label="Present Position"><value type="String">Assistant Professor</value></field>
+    <field id="n36" label="Present Organization"><refTable refValueId="r9" label="Organization"><linkedWith label="Organization" value="Nowhere University" refOrLovId="q"/></refTable></field>
+  </section>
+  <section id="s7" label="Student/Postdoctoral Supervision">
+    <field id="n37" label="Supervision Start Date"><value type="YearMonth">2021/5</value></field>
+    <field id="n38" label="Student Name"><value type="String">Intern Person One</value></field>
+    <field id="n39" label="Degree Type or Postdoctoral Status"><lov id="d5">Intern</lov></field>
+    <field id="n39r" label="Supervision Role"><lov id="sr2">Co-Supervisor</lov></field>
+    <field id="n39s" label="Student Degree Status"><lov id="ss2">In Progress</lov></field>
+  </section>
+  <section id="s8" label="Student/Postdoctoral Supervision">
+    <field id="n40" label="Supervision Start Date"><value type="YearMonth">2003/1</value></field>
+    <field id="n41" label="Student Name"><value type="String">Research Associate One</value></field>
+    <field id="n42" label="Degree Type or Postdoctoral Status"><lov id="d6">Research Associate</lov></field>
+  </section>
+  <section id="s9" label="Student/Postdoctoral Supervision">
+    <field id="n43" label="Supervision Start Date"><value type="YearMonth">2004/1</value></field>
+    <field id="n44" label="Student Name"><value type="String">Unlabelled Student</value></field>
+    <field id="n45" label="Degree Type or Postdoctoral Status"/>
+  </section>
+
+  <section id="ge1" label="Graduate Examination Activities">
+    <field id="ge2" label="Graduate Examination Activity Role"><lov id="ger">PhD External Examiner</lov></field>
+    <field id="ge3" label="Student Name"><value type="String">Examined Student One</value></field>
+    <field id="ge4" label="Department"><value type="String">Statistics</value></field>
+    <field id="ge5" label="Start Date"><value type="YearMonth">2022/5</value></field>
+  </section>
+  <section id="up1" label="User Profile">
+    <field id="up2" label="Research Interests"><value type="String">Synthetic Data
+Testing Methods</value></field>
+    <section id="up3" label="Research Specialization Keywords">
+      <field id="up4" label="Research Specialization Keywords"><value type="String">Fixtures</value></field>
+    </section>
+  </section>
+  <section id="o1" label="Other Memberships">
+    <field id="q1" label="Role"><lov id="l12">Member</lov></field>
+    <field id="q2" label="Committee Name"><value type="String">Imaginary Society</value></field>
+    <field id="q3" label="Membership Start Date"><value type="YearMonth">2000/1</value></field>
+    <field id="q4" label="Organization"/>
+    <field id="q5" label="Description"/>
+  </section>
+  <section id="pr1" label="Presentations">
+    <field id="t1" label="Presentation Title"><value type="String">Talk About Tests</value></field>
+    <field id="t2" label="Conference / Event Name"><value type="String">Workshop on Nothing</value></field>
+    <field id="t3" label="Location"><refTable refValueId="r5" label="Location"><linkedWith label="Country" value="Canada" refOrLovId="x"/></refTable></field>
+    <field id="t4" label="City"><value type="String">Sampleton</value></field>
+    <field id="t5" label="Presentation Year"><value type="Year">2022</value></field>
+    <field id="t5k" label="Keynote?"><lov id="kn">Yes</lov></field>
+  </section>
+  <section id="pr2" label="Presentations">
+    <field id="t6" label="Presentation Title"><value type="String">Older Talk</value></field>
+    <field id="t7" label="Conference / Event Name"><value type="String">Symposium of Examples</value></field>
+    <field id="t8" label="Presentation Year"><value type="Year">2019</value></field>
+  </section>
+
+  <section id="pub" label="Publications">
+    <!-- 3 journal articles, newest first: expect J3, J2, J1 in this order -->
+    <section id="ja3" label="Journal Articles">
+      <field id="u1" label="Article Title"><value type="String">Newest Journal Paper</value></field>
+      <field id="u2" label="Journal"><value type="String">Journal of Pretend Results</value></field>
+      <field id="u3" label="Volume"><value type="String">12</value></field>
+      <field id="u4" label="Issue"><value type="String">3</value></field>
+      <field id="u5" label="Page Range"><value type="String">1-10</value></field>
+      <field id="u6" label="Year"><value type="Year">2025</value></field>
+      <field id="u7" label="Authors"><value type="String">Exämple-Testér A, Student One D</value></field>
+      <field id="u7r" label="Refereed?"><lov id="rf">Yes</lov></field>
+      <field id="u7p" label="Publishing Status"><lov id="ps">Accepted</lov></field>
+      <field id="u7d" label="DOI"><value type="String">10.9999/fake.2025.1</value></field>
+    </section>
+    <section id="ja2" label="Journal Articles">
+      <field id="u8" label="Article Title"><value type="String">Middle Journal Paper?</value></field>
+      <field id="u9" label="Journal"><value type="String">Annals of Imaginary Science</value></field>
+      <field id="u10" label="Volume"><value type="String">7</value></field>
+      <field id="u10b" label="Page Range"><value type="String">.</value></field>
+      <field id="u11" label="Year"><value type="Year">2015</value></field>
+      <field id="u12" label="Authors"><value type="String">Exämple-Testér A</value></field>
+      <field id="u12r" label="Refereed?"><lov id="rf">Yes</lov></field>
+    </section>
+    <section id="ja1" label="Journal Articles">
+      <field id="u13" label="Article Title"><value type="String">Oldest Journal Paper</value></field>
+      <field id="u14" label="Journal"><value type="String">Journal of Pretend Results</value></field>
+      <field id="u15" label="Year"><value type="Year">1996</value></field>
+      <field id="u16" label="Authors"><value type="String">Exämple-Testér A</value></field>
+      <field id="u16r" label="Refereed?"><lov id="rf">No</lov></field>
+    </section>
+    <!-- 1 book chapter (single record: parser returns a dict, not a list) -->
+    <section id="bc1" label="Book Chapters">
+      <field id="v1" label="Chapter Title"><value type="String">The Only Chapter</value></field>
+      <field id="v2" label="Book Title"><value type="String">Handbook of Placeholders</value></field>
+      <field id="v3" label="Publishing Status"><lov id="l13">Published</lov></field>
+      <field id="v4" label="Year"><value type="Year">2018</value></field>
+      <field id="v5" label="Authors"><value type="String">Exämple-Testér A</value></field>
+    </section>
+    <section id="en1" label="Encyclopedia Entries">
+      <field id="w1" label="Entry Title"><value type="String">Synthetic Data (entry)</value></field>
+      <field id="w2" label="Encyclopedia Name"><value type="String">Encyclopedia of Nothing</value></field>
+      <field id="w3" label="Year"><value type="Year">2017</value></field>
+      <field id="w4" label="Authors"><value type="String">Exämple-Testér A</value></field>
+    </section>
+    <section id="mg2" label="Magazine Entries">
+      <field id="x1" label="Article Title"><value type="String">Popular Piece Two</value></field>
+      <field id="x2" label="Magazine Name"><value type="String">Pretend Monthly</value></field>
+      <field id="x3" label="Year"><value type="Year">2021</value></field>
+      <field id="x4" label="Authors"><value type="String">Exämple-Testér A</value></field>
+    </section>
+    <section id="mg1" label="Magazine Entries">
+      <field id="x5" label="Article Title"><value type="String">Popular Piece One</value></field>
+      <field id="x6" label="Magazine Name"><value type="String">Pretend Monthly</value></field>
+      <field id="x7" label="Year"><value type="Year">2011</value></field>
+      <field id="x8" label="Authors"><value type="String">Exämple-Testér A</value></field>
+    </section>
+    <section id="rp2" label="Reports">
+      <field id="y1" label="Report Title"><value type="String">Technical Report B</value></field>
+      <field id="y2" label="Year Submitted"><value type="Year">2009</value></field>
+      <field id="y3" label="Other Organization"><value type="String">Imaginary University</value></field>
+      <field id="y4" label="Authors"><value type="String">Exämple-Testér A</value></field>
+    </section>
+    <section id="rp1" label="Reports">
+      <field id="y5" label="Report Title"><value type="String">Technical Report A</value></field>
+      <field id="y6" label="Year Submitted"><value type="Year">2008</value></field>
+      <field id="y7" label="Authors"><value type="String">Exämple-Testér A</value></field>
+    </section>
+    <section id="cp2" label="Conference Publications">
+      <field id="z1" label="Publication Title"><value type="String">Newer Conference Paper</value></field>
+      <field id="z2" label="Conference Name"><value type="String">Conference on Fictional Systems</value></field>
+      <field id="z3" label="City"><value type="String">Nowhereville</value></field>
+      <field id="z4" label="Page Range"><value type="String">5-9</value></field>
+      <field id="z5" label="Year"><value type="Year">2023</value></field>
+      <field id="z6" label="Authors"><value type="String">Exämple-Testér A</value></field>
+    </section>
+    <section id="cp1" label="Conference Publications">
+      <field id="z7" label="Publication Title"><value type="String">Older Conference Paper</value></field>
+      <field id="z8" label="Conference Name"><value type="String">Symposium of Examples</value></field>
+      <field id="z9" label="Year"/>
+      <field id="z10" label="Authors"><value type="String">Exämple-Testér A</value></field>
+    </section>
+  </section>
+</generic-cv:generic-cv>

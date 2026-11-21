@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{#- PDF layout for the 'reviewer' style. Record text comes from style_reviewer.py;
+    only appearance is set here. Autoescape is on, so XML text is HTML-escaped. -#}
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ cv.name }}</title>
+    <style>
+        :root { --text: #1a1a1a; --muted: #666666; --accent: #00707a; --rule: #b9c6c8; }
+        @page {
+            size: letter;
+            margin: 0.7in 0.6in 0.7in 0.6in;
+            @top-right { content: string(section, start); font: 7pt Arial, Helvetica, sans-serif; color: #666666; }
+            @bottom-left { content: string(footer); font: 7pt Arial, Helvetica, sans-serif; color: #666666; }
+            @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 7pt Arial, Helvetica, sans-serif; color: #666666; }
+        }
+        @page :first { @top-right { content: none; } }
+        body { font: 8.5pt/1.25 Arial, Helvetica, "Liberation Sans", sans-serif; color: var(--text); margin: 0; }
+        .footer-text { string-set: footer content(); visibility: hidden; height: 0; margin: 0; overflow: hidden; }
+        .name { font-size: 18pt; font-weight: bold; margin: 0 0 2pt; }
+        .subtitle p { margin: 0; }
+        .subtitle { padding-bottom: 6pt; border-bottom: 0.75pt solid var(--rule); margin-bottom: 4pt; }
+        h1 { font-size: 12pt; color: var(--accent); margin: 10pt 0 3pt; padding-bottom: 1pt;
+             border-bottom: 0.5pt solid var(--accent); string-set: section content(); break-after: avoid; }
+        h2 { font-size: 9pt; font-weight: bold; margin: 6pt 0 2pt; break-after: avoid; }
+        table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+        col.left { width: 0.85in; }
+        tr { break-inside: avoid; }
+        td { vertical-align: top; padding: 0 0 2.5pt 0; }
+        td.left { padding-right: 0.12in; color: var(--muted); }
+        td.label { text-align: right; padding-right: 0.15in; color: var(--muted); }
+        td.year { font-size: 8pt; font-weight: bold; color: var(--muted); padding: 4pt 0 1pt; }
+        tr.year { break-after: avoid; }
+        p.line { margin: 0; overflow-wrap: anywhere; }
+        .indent-1 { padding-left: 1em; }
+        .muted, .tag { color: var(--muted); }
+        .tag { font-size: 7.5pt; }
+        .self { font-weight: bold; }
+        .em { font-style: italic; }
+        .note { font-style: italic; color: var(--muted); margin: 2pt 0 4pt; }
+        a { color: var(--accent); text-decoration: none; }
+    </style>
+</head>
+<body>
+{% macro render_line(line) -%}
+    <p class="line indent-{{ line.indent }}{% if line.muted %} muted{% endif %}">
+    {%- if line.parts -%}
+        {%- for part in line.parts -%}
+            {%- if part.role == 'link' -%}<a href="{{ part.href }}">{{ part.text }}</a>
+            {%- elif part.role -%}<span class="{{ part.role }}">{{ part.text }}</span>
+            {%- else -%}{{ part.text }}{%- endif -%}
+        {%- endfor -%}
+    {%- elif line.bold -%}<b>{{ line.text }}</b>
+    {%- else -%}{{ line.text }}{%- endif -%}
+    </p>
+{%- endmacro %}
+
+<p class="footer-text">{{ cv.footer }}</p>
+<div class="name">{{ cv.name }}</div>
+<div class="subtitle">
+{% for line in cv.subtitle %}{{ render_line(line) }}{% endfor %}
+</div>
+
+{% for section in cv.sections %}
+    <h1>{{ section.title }}</h1>
+    {% for group in section.groups %}
+        {% if group.title %}<h2>{{ group.title }}</h2>{% endif %}
+        <table>
+            <colgroup><col class="left"><col></colgroup>
+        {% for entry in group.entries %}
+            {% if entry.left is none and entry.lines[0].kind == 'year' %}
+                <tr class="year"><td class="year" colspan="2">{{ entry.lines[0].text }}</td></tr>
+            {% elif entry.left is none %}
+                <tr><td colspan="2">{% for line in entry.lines %}
+                    {% if line.kind == 'note' %}<p class="note">{{ line.text }}</p>{% else %}{{ render_line(line) }}{% endif %}
+                {% endfor %}</td></tr>
+            {% else %}
+                <tr>
+                    <td class="left{% if entry.left and entry.left[0] in 'JCBMR' and entry.left[-1].isdigit() %} label{% endif %}">{{ entry.left }}</td>
+                    <td>{% for line in entry.lines %}{{ render_line(line) }}{% endfor %}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </table>
+    {% endfor %}
+{% endfor %}
+</body>
+</html>

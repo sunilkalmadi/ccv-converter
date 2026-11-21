@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!--
+  Web version of the CCV converter. It runs the SAME Python files as the command line
+  (ccv_data.py, style_reviewer.py, render_docx.py, render_pdf.py and the two templates) inside the browser with
+  Pyodide, so the web and command-line outputs always match. The XML never leaves the
+  user's computer: there is no server, only static files.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CCV Converter</title>
+<style>
+  :root { --accent: #007b7b; --bg: #ffffff; --fg: #1d2327; --muted: #5b6770; --line: #d5dde2; --panel: #f4f7f8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --accent: #3fc1c1; --bg: #15191c; --fg: #e6ecef; --muted: #9aa8b1; --line: #2e383e; --panel: #1d2327; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 960px; margin: 0 auto; padding: 32px 16px 48px; }
+  h1 { margin: 0 0 4px; font-size: 1.6rem; color: var(--accent); }
+  .lead { margin: 0 0 24px; color: var(--muted); }
+  .drop { display: block; border: 2px dashed var(--line); border-radius: 10px; padding: 28px 16px; text-align: center;
+          background: var(--panel); cursor: pointer; transition: border-color .15s; }
+  .drop:hover, .drop.over { border-color: var(--accent); }
+  .drop input { display: none; }
+  .drop strong { color: var(--accent); }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 16px 0; }
+  select { font: inherit; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line);
+           background: var(--bg); color: var(--fg); max-width: 100%; }
+  button { font: inherit; padding: 9px 16px; border-radius: 8px; border: 1px solid var(--accent); cursor: pointer;
+           background: var(--accent); color: #fff; }
+  button.secondary { background: transparent; color: var(--accent); }
+  button:disabled { opacity: .5; cursor: default; }
+  #status { margin: 12px 0; color: var(--muted); }
+  #status.error { color: #c0392b; }
+  .hint { font-size: .9rem; color: var(--muted); margin: 0; }
+  details { margin: 12px 0; }
+  pre { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; overflow-x: auto; font-size: .85rem; }
+  iframe { width: 100%; height: 75vh; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  footer { margin-top: 32px; font-size: .85rem; color: var(--muted); }
+  a { color: var(--accent); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>CCV → compact CV</h1>
+  <p class="lead">Turns a Canadian Common CV <b>XML export</b> into a compact PDF and an editable Word file.
+    Your file is processed inside this browser tab. It is <b>never uploaded</b>.</p>
+
+  <label class="drop" id="drop">
+    <input type="file" id="file" accept=".xml,text/xml,application/xml">
+    <strong>Choose your CCV XML file</strong> or drop it here
+  </label>
+  <div class="row">
+    <label for="style">Style</label>
+    <select id="style">
+      <option value="classic">Classic: compact, every field</option>
+      <option value="reviewer">Reviewer: organized for grant panels and committees</option>
+    </select>
+    <button type="button" class="secondary" id="demo" disabled>Try a made-up example</button>
+  </div>
+
+  <p id="status">Loading the converter… (the first visit takes 10–20 seconds)</p>
+
+  <div id="results" hidden>
+    <div class="row">
+      <button type="button" id="docx">Download Word (.docx)</button>
+      <button type="button" id="pdf">Save as PDF…</button>
+    </div>
+    <p class="hint">PDF: in the print window choose <b>Save as PDF</b>, and turn off <b>Headers and footers</b>.</p>
+    <details>
+      <summary>Check the counts (supervision and publications)</summary>
+      <pre id="summary"></pre>
+    </details>
+    <iframe id="preview" title="CV preview"></iframe>
+  </div>
+
+  <footer>
+    Based on Karim Ali's <a href="https://github.com/karimali3/ccv_reduction">ccv_reduction</a>.
+    Word edits are not kept if you convert again; fix permanent errors in the CCV itself.
+  </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script>
+  // Files copied into the in-browser Python, relative to this page.
+  const CODE_FILES = ['ccv_config.py', 'ccv_data.py', 'style_reviewer.py', 'render_pdf.py',
+                      'render_docx.py', 'cv_tmpl.html', 'cv_tmpl_reviewer.html'];
+  const DEMO_FILE = 'tests/fixtures/synthetic_ccv.xml';
+  const STYLE_SUFFIX = { classic: '', reviewer: '-reviewer' };   // same as the command line
+
+  const $ = (id) => document.getElementById(id);
+  let py = null, stem = 'cv', docxBytes = null, last = null;
+
+  function status(text, isError) {
+    $('status').textContent = text;
+    $('status').className = isError ? 'error' : '';
+  }
+
+  async function boot() {
+    py = await loadPyodide();
+    await py.loadPackage(['lxml', 'jinja2', 'micropip']);
+    await py.pyimport('micropip').install('python-docx==1.2.0');   // pinned: tested version
+    py.FS.mkdirTree('/app');
+    for (const name of CODE_FILES) {
+      const res = await fetch(name, { cache: 'no-cache' });
+      if (!res.ok) throw new Error('Could not load ' + name);
+      py.FS.writeFile('/app/' + name, await res.text());
+    }
+    py.runPython("import sys; sys.path.insert(0, '/app')");
+    $('demo').disabled = false;
+    status('Ready. Choose your CCV XML file.');
+  }
+
+  async function convert(bytes, fileName) {
+    if (!py) { status('Still loading the converter. Try again in a few seconds.'); return; }
+    status('Converting ' + fileName + '…');
+    last = { bytes, fileName };
+    const style = $('style').value;
+    stem = (fileName.replace(/\.[^.]+$/, '') || 'cv') + STYLE_SUFFIX[style];
+    await new Promise((r) => setTimeout(r, 50));   // let the browser show the message first
+    try {
+      py.FS.writeFile('/tmp/input.xml', bytes);
+      py.globals.set('STYLE', style);
+      const result = JSON.parse(py.runPython(`
+import json, ccv_data, style_reviewer, render_pdf, render_docx
+sections = ccv_data.parse_xml('/tmp/input.xml')
+cv = style_reviewer.build_reviewer_cv(sections) if STYLE == 'reviewer' else ccv_data.build_cv(sections)
+render_docx.write_docx(cv, '/tmp/output.docx')
+json.dumps({'html': render_pdf.render_html(cv), 'summary': ccv_data.summary(ccv_data.build_cv(sections))})
+`));
+      docxBytes = py.FS.readFile('/tmp/output.docx');
+      $('summary').textContent = result.summary;
+      $('preview').srcdoc = result.html;
+      $('results').hidden = false;
+      status('Done: ' + fileName + '. Preview below.');
+    } catch (err) {
+      console.error(err);
+      $('results').hidden = true;
+      const reason = String(err.message || err).trim().split('\n').pop()
+        .replace(/^[\w.]*(Error|Exception): /, '');
+      status('Could not convert ' + fileName + ': ' + reason, true);
+    }
+  }
+
+  async function convertFile(file) {
+    if (file) convert(new Uint8Array(await file.arrayBuffer()), file.name);
+  }
+
+  $('style').addEventListener('change', () => {       // re-convert the current file in the new style
+    if (last) convert(last.bytes, last.fileName);
+  });
+
+  $('file').addEventListener('change', (e) => {
+    convertFile(e.target.files[0]);
+    e.target.value = '';      // so choosing the same (re-exported) file again converts it again
+  });
+  const drop = $('drop');
+  drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('over'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+  drop.addEventListener('drop', (e) => {
+    e.preventDefault(); drop.classList.remove('over');
+    convertFile(e.dataTransfer.files[0]);
+  });
+
+  $('demo').addEventListener('click', async () => {
+    const res = await fetch(DEMO_FILE);
+    convert(new Uint8Array(await res.arrayBuffer()), 'example_cv.xml');
+  });
+
+  $('docx').addEventListener('click', () => {
+    const blob = new Blob([docxBytes], {
+      type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = stem + '.docx';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+  });
+
+  // Print the CV from its own window: behaves the same in Safari, Chrome, Edge and Firefox,
+  // and the window title becomes the suggested PDF file name.
+  $('pdf').addEventListener('click', () => {
+    const win = window.open('', '_blank');
+    if (!win) {
+      status('Your browser blocked the print window. Allow pop-ups for this page and try again.', true);
+      return;
+    }
+    win.document.open();
+    win.document.write($('preview').srcdoc);
+    win.document.close();
+    win.document.title = stem;
+    setTimeout(() => { win.focus(); win.print(); }, 300);
+  });
+
+  boot().catch((err) => {
+    console.error(err);
+    status('The converter could not load (' + err.message + '). Check your internet connection and reload.', true);
+  });
+</script>
+</body>
+</html>
